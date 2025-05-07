@@ -31,6 +31,11 @@ public class PlayerMovement : MonoBehaviour
         else if (Input.GetButtonUp("Crouch")) {
             crouch = false;
         }
+
+        if (Input.GetMouseButtonDown(0)) // Left-click
+        {
+            animator.SetTrigger("Attack");
+        }
         
     }
 
