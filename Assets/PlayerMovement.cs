@@ -12,6 +12,12 @@ public class PlayerMovement : MonoBehaviour
 
     bool jump = false;
     bool  crouch = false;
+
+    void Start()
+{   
+    //Debug.Log("Subscribed to OnLandEvent");
+    controller.OnLandEvent.AddListener(OnLanding);
+}
     void Update()
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
@@ -46,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void OnLanding() {
+        
+        //Debug.Log("Landed — resetting IsJumping");
         animator.SetBool("IsJumping", false);
     }
 }
