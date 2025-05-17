@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     bool jump = false;
     bool  crouch = false;
 
+    private int uiMoveDirection = 0; // -1 for left, 1 for right, 0 for idle
+
+
     void Start()
 {   
     //Debug.Log("Subscribed to OnLandEvent");
@@ -20,7 +23,9 @@ public class PlayerMovement : MonoBehaviour
 }
     void Update()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        float input = Input.GetAxisRaw("Horizontal") + uiMoveDirection;
+        horizontalMove = Mathf.Clamp(input, -1f, 1f) * runSpeed;
+
 
         animator.SetFloat("Speed" , Mathf.Abs(horizontalMove));
 
@@ -38,10 +43,10 @@ public class PlayerMovement : MonoBehaviour
             crouch = false;
         }
 
-        if (Input.GetMouseButtonDown(0)) // Left-click
-        {
-            animator.SetTrigger("Attack");
-        }
+        //if (Input.GetMouseButtonDown(0)) // Left-click
+        //{
+           // animator.SetTrigger("Attack");
+        //}
         
     }
 
@@ -56,4 +61,28 @@ public class PlayerMovement : MonoBehaviour
         //Debug.Log("Landed — resetting IsJumping");
         animator.SetBool("IsJumping", false);
     }
+
+    public void OnMoveLeftButtonDown() {
+    uiMoveDirection = -1;
+
+    }
+
+    public void OnMoveRightButtonDown() {
+    uiMoveDirection = 1;
+    }
+
+    public void OnMoveButtonUp() {
+    uiMoveDirection = 0;
+    }
+    public void JumpButtonPressed() {
+    if (!jump) {
+        jump = true;
+        animator.SetBool("IsJumping", true);
+    }
 }
+    public void AttackButtonPressed() {
+    animator.SetTrigger("Attack");
+}
+}
+
+
