@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
 
     private int uiMoveDirection = 0; // -1 for left, 1 for right, 0 for idle
 
+    private bool attackQueued = false;
+
+
 
     void Start()
 {   
@@ -32,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButton("Jump")) 
         {
          jump = true;
-         animator.SetBool("IsJumping", true);
+         animator.SetTrigger("Jump");
+         //animator.SetBool("IsJumping", true);
         }
 
         if (Input.GetButtonDown("Crouch")) 
@@ -58,8 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnLanding() {
         
-        //Debug.Log("Landed — resetting IsJumping");
-        animator.SetBool("IsJumping", false);
+        Debug.Log("Landed — resetting IsJumping");
+        //animator.SetBool("IsJumping", false);
     }
 
     public void OnMoveLeftButtonDown() {
